@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="Big5" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://test.com/course"
+           xmlns:tns="http://test.com/course" xmlns:xs="http://www.w3.org/1999/XSL/Transform"
+           elementFormDefault="qualified"
+>
+    <xsd:element name="GetCourseDetailsRequest">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="id" type="xsd:int"></xsd:element>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="GetCourseDetailsResponse">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="CourseDetails" type="tns:CourseDetails" />
+                </xsd:sequence>
+            </xsd:complexType>
+    </xsd:element>
+    <xsd:complexType name="CourseDetails">
+        <xsd:sequence>
+            <xsd:element name="id" type="xsd:int"></xsd:element>
+            <xsd:element name="name" type="xsd:string"></xsd:element>
+            <xsd:element name="description" type="xsd:string"></xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+
+
+</xsd:schema>
