@@ -19,6 +19,22 @@
                 </xsd:sequence>
             </xsd:complexType>
     </xsd:element>
+
+    <xsd:element name="DeleteCourseDetailsRequest">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="id" type="xsd:int"></xsd:element>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="DeleteCourseDetailsResponse">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="status" type="xsd:int"></xsd:element>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
     <xsd:complexType name="CourseDetails">
         <xsd:sequence>
             <xsd:element name="id" type="xsd:integer"></xsd:element>

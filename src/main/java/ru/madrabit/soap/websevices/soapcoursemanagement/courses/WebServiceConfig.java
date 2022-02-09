@@ -1,4 +1,4 @@
-package ru.madrabit.soap.websevices.soapcoursemanagement;
+package ru.madrabit.soap.websevices.soapcoursemanagement.courses;
 
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.ApplicationContext;

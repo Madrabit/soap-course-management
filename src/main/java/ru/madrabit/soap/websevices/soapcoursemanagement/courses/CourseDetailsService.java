@@ -1,13 +1,18 @@
-package ru.madrabit.soap.websevices.soapcoursemanagement;
+package ru.madrabit.soap.websevices.soapcoursemanagement.courses;
 
 
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 @Component
 public class CourseDetailsService {
+
+    public enum Status {
+        SUCCESS, FAILURE;
+    }
 
     private static List<Course> courses = new ArrayList<>();
 
@@ -30,5 +35,17 @@ public class CourseDetailsService {
 
     public List<Course> findAll() {
         return courses;
+    }
+
+    public Status delete(int id) {
+        Iterator<Course> iter = courses.iterator();
+        while (iter.hasNext()) {
+            final Course course = iter.next();
+            if (course.getId() == id) {
+                courses.remove(course);
+                return Status.SUCCESS;
+            }
+        }
+        return Status.FAILURE;
     }
 }

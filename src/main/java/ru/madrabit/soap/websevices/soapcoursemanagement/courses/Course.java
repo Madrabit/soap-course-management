@@ -1,4 +1,4 @@
-package ru.madrabit.soap.websevices.soapcoursemanagement;
+package ru.madrabit.soap.websevices.soapcoursemanagement.courses;
 
 public class Course {
 

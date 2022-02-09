@@ -1,4 +1,4 @@
-package ru.madrabit.soap.websevices.soapcoursemanagement;
+package ru.madrabit.soap.websevices.soapcoursemanagement.courses;
 
 import com.test.course.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +27,22 @@ public class CourseDetailsEndpoint {
     public GetAllCourseDetailsResponse processAllCourseDetailsRequest(@RequestPayload GetAllCourseDetailsRequest request) {
         final List<Course> courses = service.findAll();
         return mapAllCourseDetails(courses);
+    }
+
+    @PayloadRoot(namespace = "http://test.com/course", localPart = "DeleteCourseDetailsRequest")
+    @ResponsePayload
+    public DeleteCourseDetailsResponse processAllCourseDetailsRequest(@RequestPayload DeleteCourseDetailsRequest request) {
+        final CourseDetailsService.Status status = service.delete(request.getId());
+        DeleteCourseDetailsResponse response = new DeleteCourseDetailsResponse();
+        response.setStatus(mapStatus(status));
+        return response;
+    }
+
+    private com.test.course.Status mapStatus(CourseDetailsService.Status status) {
+        if (status == CourseDetailsService.Status.FAILURE) {
+            return com.test.course.Status.FAILURE;
+        }
+        return com.test.course.Status.SUCCESS;
     }
 
     private GetCourseDetailsResponse mapCourseDetails(Course course) {
