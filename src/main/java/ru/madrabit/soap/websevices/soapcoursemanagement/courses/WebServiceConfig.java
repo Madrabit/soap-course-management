@@ -6,15 +6,24 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.ws.config.annotation.EnableWs;
+import org.springframework.ws.config.annotation.WsConfigurer;
+import org.springframework.ws.server.EndpointInterceptor;
+import org.springframework.ws.server.endpoint.adapter.method.MethodArgumentResolver;
+import org.springframework.ws.server.endpoint.adapter.method.MethodReturnValueHandler;
+import org.springframework.ws.soap.security.xwss.XwsSecurityInterceptor;
+import org.springframework.ws.soap.security.xwss.callback.SimplePasswordValidationCallbackHandler;
 import org.springframework.ws.transport.http.MessageDispatcherServlet;
 import org.springframework.ws.wsdl.wsdl11.DefaultWsdl11Definition;
 import org.springframework.xml.xsd.SimpleXsdSchema;
 import org.springframework.xml.xsd.XsdSchema;
 
+import java.util.Collections;
+import java.util.List;
+
 
 @EnableWs
 @Configuration
-public class WebServiceConfig {
+public class WebServiceConfig implements WsConfigurer {
 
     @Bean
     public ServletRegistrationBean messageDispatcherServlet(ApplicationContext context) {
@@ -39,5 +48,35 @@ public class WebServiceConfig {
     public XsdSchema coursesSchema() {
         return new SimpleXsdSchema(new ClassPathResource("xsd/course-details.xsd"));
     }
+
+    @Bean
+    public XwsSecurityInterceptor securityInterceptor() {
+        XwsSecurityInterceptor interceptor = new XwsSecurityInterceptor();
+        interceptor.setCallbackHandler(callbackHandler());
+        interceptor.setPolicyConfiguration(new ClassPathResource("securityPolicy.xml"));
+        return interceptor;
+    }
+
+    @Override
+    public void addInterceptors(List<EndpointInterceptor> list) {
+        list.add(securityInterceptor());
+    }
+
+    private SimplePasswordValidationCallbackHandler callbackHandler() {
+        SimplePasswordValidationCallbackHandler handler = new SimplePasswordValidationCallbackHandler();
+        handler.setUsersMap(Collections.singletonMap("user", "password"));
+        return handler;
+    }
+
+    @Override
+    public void addArgumentResolvers(List<MethodArgumentResolver> list) {
+
+    }
+
+    @Override
+    public void addReturnValueHandlers(List<MethodReturnValueHandler> list) {
+
+    }
+
 
 }
